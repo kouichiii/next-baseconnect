@@ -39,6 +39,7 @@ export default function Amount() {
           onChange={handleAmountSearch} // イベントをハンドラに渡す
         >
           <option disabled value="">選択してください</option>
+          <option disabled value="0">指定なし</option>
           {incomes.map((income) => (
             <option key={income} value={income}>
               {income}万円以上

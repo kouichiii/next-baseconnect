@@ -10,7 +10,6 @@ export default function Page() {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    // API からデータを取得
     const fetchCategories = async () => {
       try {
         const data = await fetchCategory();
