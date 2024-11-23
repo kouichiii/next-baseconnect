@@ -18,11 +18,12 @@ export default async function Home(props: {
   const amount = searchParams?.amount || "";
   const currentPage = Number(searchParams?.page) || 1;
 
-  const [totalPages, totalJobs, filteredJobs] = await fetchFilteredJobs(
+  const [totalPages, totalJobs, filteredJobs= []] = await fetchFilteredJobs(
     query,
     amount,
     currentPage
   );
+  const totalPagesNumber = typeof totalPages === "number" ? totalPages : 0;
 
   
   return (
@@ -33,7 +34,7 @@ export default async function Home(props: {
           <div>
             <h1 className="text-xl  font-bold">求人一覧</h1>
             <p className="pb-4">該当件数: {totalJobs}件</p>
-              {filteredJobs.map((job) => (
+              {Array.isArray(filteredJobs) && filteredJobs.map((job) => (
                 <div
                   key={job.id}
                   className="bg-white p-4 mb-2 border rounded shadow"
@@ -45,7 +46,7 @@ export default async function Home(props: {
               ))}
           </div>
           <div className="mt-5 flex w-full justify-center">
-            <Pagination totalPages={totalPages} />
+            <Pagination totalPages={totalPagesNumber} />
           </div>
         </div>
       </div>

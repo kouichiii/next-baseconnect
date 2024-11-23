@@ -125,7 +125,7 @@ export async function fetchFilteredJobs(query: string[], amount: string, current
         `,
             values
         );
-        const totalJobs = Number(countResult.rows[0].total);
+        const totalJobs = Number(countResult.rows[0].total || 0);
         const totalPages = Math.ceil(totalJobs / ITEMS_PER_PAGE);
         const result = await client.query(
             `
@@ -141,7 +141,7 @@ export async function fetchFilteredJobs(query: string[], amount: string, current
         `,
             [...values, ITEMS_PER_PAGE, offset]
         );
-        return [totalPages,totalJobs, result.rows];
+        return [totalPages,totalJobs, result.rows || []];
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to fetch Jobs.');
